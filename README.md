@@ -80,4 +80,27 @@
 - **TypeScript エラー**: エラーメッセージをよく読み、型定義や import を見直す
 - **分からないことがあれば必ずメンターやチームに相談してください**
 
----
+## コミットメッセージ自動生成を日本語にする方法
+
+コミット文を自動生成する際に日本語にしたい場合は、以下の手順を行ってください。
+
+1. プロジェクト直下に `.vscode` フォルダを作成します（既に存在する場合はスキップ）。
+2. `.vscode` フォルダ内に `settings.json` ファイルを作成し、以下の内容を記載します。
+
+```jsonc
+{
+  "github.copilot.chat.commitMessageGeneration.instructions": [
+    {
+      "text": "必ず日本語で記述してください"
+    },
+    {
+      "text": "コミットメッセージは、最初にConventional Commitsに則って記述してください"
+    }
+  ],
+  "editor.formatOnSave": true,
+  "prettier.enable": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
+}
+```
+
+この設定により、GitHub Copilot Chatでコミットメッセージを自動生成する際に日本語で出力され、Conventional Commits形式が推奨されます。
