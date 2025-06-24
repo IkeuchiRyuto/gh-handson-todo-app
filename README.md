@@ -1,41 +1,106 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# 新卒研修向けガイド
 
-## Getting Started
+このリポジトリは新卒研修用の Next.js ハンズオン教材です。以下のルール・手順に従って開発を進めてください。
 
-First, run the development server:
+## 1. 前提条件
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Node.js（推奨: 最新の LTS バージョン）
+- npm または yarn, pnpm, bun のいずれか
+- Git（GitHub アカウント必須）
+- 推奨エディタ: [Visual Studio Code](https://code.visualstudio.com/)
+
+## 2. 推奨 VSCode 拡張機能
+
+- ESLint
+- Prettier
+- GitHub Pull Requests and Issues
+- Japanese Language Pack（必要に応じて）
+
+## 3. プロジェクトセットアップ手順
+
+1. このリポジトリを Fork し、自分の GitHub アカウントにコピーします。
+2. Fork したリポジトリをローカルに Clone します。
+   ```bash
+   git clone https://github.com/あなたのユーザー名/gh-handson-todo-app.git
+   cd gh-handson-todo-app
+   ```
+3. パッケージをインストールします。
+   ```bash
+   npm install
+   # または
+   yarn install
+   # または
+   pnpm install
+   # または
+   bun install
+   ```
+4. 開発サーバーを起動します。
+   ```bash
+   npm run dev
+   ```
+5. [http://localhost:3000](http://localhost:3000) をブラウザで開き、動作確認してください。
+
+## 4. ブランチ運用ルール
+
+- `main` ブランチは常にデプロイ可能な状態を保ちます。
+- 機能追加や修正は必ず新しいブランチ（例: `feature/タスク名` や `fix/バグ内容`）を作成して作業してください。
+- 直接 `main` へコミット・プッシュは禁止です。
+
+## 5. コミットメッセージ規約
+
+- コミットメッセージは簡潔かつ内容が分かるように記述してください。
+- 例:
+  - `feat: タスク追加機能を実装`
+  - `fix: 日付表示バグを修正`
+  - `docs: READMEにセットアップ手順を追記`
+
+## 6. Pull Request（PR）ルール
+
+1. 作業が完了したら GitHub 上で PR を作成してください。
+2. PR タイトル・説明欄には「何を・なぜ」行ったかを明記してください。
+3. PR 作成後は必ず他のメンバーにレビュー依頼を出してください。
+4. レビューで指摘があれば修正し、再度レビューを依頼してください。
+5. LGTM（Approve）が 1 件以上ついたら `main` へマージ可能です。
+6. マージは「Squash and merge」方式を推奨します。
+
+## 7. コードフォーマット・Lint・テスト
+
+- コード整形: `npm run format` または `npx prettier --write .`
+- Lint: `npm run lint`
+- テスト（必要に応じて）: `npm test` など
+- PR 作成前に必ず Lint・フォーマットを実行してください。
+
+## 8. よくあるトラブル・FAQ
+
+- **依存パッケージの不整合**: `node_modules` を削除し再インストール
+  ```bash
+  rm -rf node_modules && npm install
+  ```
+- **ポート競合でサーバーが起動しない**: 他のアプリが 3000 番ポートを使っていないか確認
+- **TypeScript エラー**: エラーメッセージをよく読み、型定義や import を見直す
+- **分からないことがあれば必ずメンターやチームに相談してください**
+
+## コミットメッセージ自動生成を日本語にする方法
+
+コミット文を自動生成する際に日本語にしたい場合は、以下の手順を行ってください。
+
+1. プロジェクト直下に `.vscode` フォルダを作成します（既に存在する場合はスキップ）。
+2. `.vscode` フォルダ内に `settings.json` ファイルを作成し、以下の内容を記載します。
+
+```jsonc
+{
+  "github.copilot.chat.commitMessageGeneration.instructions": [
+    {
+      "text": "必ず日本語で記述してください"
+    },
+    {
+      "text": "コミットメッセージは、最初にConventional Commitsに則って記述してください"
+    }
+  ],
+  "editor.formatOnSave": true,
+  "prettier.enable": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
+}
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
-# gh-handson-todo-app
+この設定により、GitHub Copilot Chatでコミットメッセージを自動生成する際に日本語で出力され、Conventional Commits形式が推奨されます。
