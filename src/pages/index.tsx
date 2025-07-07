@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Geist, Geist_Mono } from "next/font/google";
+import { useState } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -12,6 +13,38 @@ const geistMono = Geist_Mono({
 });
 
 export default function Home() {
+  // Todo型の定義
+  type Todo = {
+    id: number;
+    text: string;
+    completed: boolean;
+  };
+  // useStateでtodoリストを管理
+  const [todos, setTodos] = useState<Todo[]>([]);
+  const [input, setInput] = useState("");
+
+  // 追加
+  const handleAdd = () => {
+    if (!input.trim()) return;
+    setTodos([
+      ...todos,
+      { id: Date.now(), text: input, completed: false },
+    ]);
+    setInput("");
+  };
+  // 削除
+  const handleDelete = (id: number) => {
+    setTodos(todos.filter((todo) => todo.id !== id));
+  };
+  // 完了チェック
+  const handleToggle = (id: number) => {
+    setTodos(
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo
+      )
+    );
+  };
+
   return (
     <div
       className={`${geistSans.className} ${geistMono.className} grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]`}
@@ -62,6 +95,56 @@ export default function Home() {
             Read our docs
           </a>
         </div>
+        {/* ここからTodoアプリ */}
+        <div className="w-full max-w-md mx-auto bg-white dark:bg-gray-800 rounded shadow p-6 mb-8">
+          <h1 className="text-2xl font-bold mb-4">Todoアプリ</h1>
+          <div className="flex gap-2 mb-4">
+            <input
+              className="flex-1 border rounded px-2 py-1 text-black"
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="新しいタスクを入力"
+              onKeyDown={(e) => e.key === "Enter" && handleAdd()}
+            />
+            <button
+              className="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600"
+              onClick={handleAdd}
+            >
+              追加
+            </button>
+          </div>
+          <ul>
+            {todos.map((todo) => (
+              <li
+                key={todo.id}
+                className="flex items-center justify-between py-1 border-b last:border-b-0"
+              >
+                <label className="flex items-center gap-2 flex-1 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={todo.completed}
+                    onChange={() => handleToggle(todo.id)}
+                  />
+                  <span
+                    className={
+                      todo.completed ? "line-through text-gray-400" : ""
+                    }
+                  >
+                    {todo.text}
+                  </span>
+                </label>
+                <button
+                  className="ml-2 text-red-500 hover:text-red-700"
+                  onClick={() => handleDelete(todo.id)}
+                >
+                  削除
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+        {/* ここまでTodoアプリ */}
       </main>
       <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
         <a
